@@ -2,3 +2,5 @@
 CCA Coding++ Extension Project
 
 ***TEST***
+
+*Currently testing git with Atom. Here's hoping it works!*
