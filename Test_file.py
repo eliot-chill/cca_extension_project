@@ -1,12 +1,13 @@
-import spacy                           # See "Installing spaCy"
+import spacy
 
 nlp = spacy.load('en')
 
-spacy.en.English                 # You are here.
+spacy.en.English
 
-doc = nlp(u'Hello, spacy!')            # See "Using the pipeline"
+question = "When was the Berlin Wall built?"
+
+doc = nlp(question)
 
 print([(w.text, w.pos_) for w in doc])
-
 
 #print("Hello world!")
