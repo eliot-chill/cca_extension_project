@@ -1,0 +1,19 @@
+Game sequence:
+1. Setup board
+  a) Make players
+  b) Make board - divide board into regions
+  c) Make pieces
+
+2. Decide on first player
+  a) Randomly decide which player is to go first
+  b) Player 1 takes black (or X) and player 2 takes white (or O)
+
+3. Turn
+  a) Player places piece into empty section
+  b) Check if player has won
+  c) Choose a region to turn (1, 2, 3 or 4)
+  d) Choose a direction to turn said region
+  e) Turn said region in chosen direction
+  f) Check is player has won
+  g) Pass turn to next player
+  h) Repeat turn sequence
