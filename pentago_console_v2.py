@@ -30,7 +30,6 @@ class Region:
         for i in range(len(self.field)):
             if (self.field[i].index == 5) or (self.field[i].index == 2) or (self.field[i].index == 8):
                 print(self.field[i].index," ")
-                print("= = = = = = = = = =")
 
             else:
                 print(self.field[i].index," ", end = '')
