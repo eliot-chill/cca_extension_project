@@ -43,7 +43,7 @@ def rotate_array_clockwise(array):
 
 
 #print_array(region)
-
+print_array(region)
 region = rotate_array_clockwise(region)
 
 print_array(region)
