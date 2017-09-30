@@ -35,7 +35,7 @@ class Pentago:
          self.o_player = o_player
          self.ai_delay = ai_delay
 
-         self.winner = 0
+         self.winner = -1
          self.game_running = True
          self.x_turn = True
 
@@ -136,9 +136,10 @@ class Pentago:
         if self.board.win_check() == 1:
             self.winner = pentago_board.X
             self.game_running = False
-        elif self.board.win_check() == 2:
+        if self.board.win_check() == 2:
             self.winner = pentago_board.O
             self.game_running = False
-        elif self.board.board_full():
+        if self.board.board_full():
+            print("Board is full")
             self.winner = 0
             self.game_running = False

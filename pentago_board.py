@@ -99,10 +99,11 @@ class PentagoBoard:
 
 
     def board_full(self):
+        checking_list = self.three_d_to_two_d()
 
-        for i in range(len(self.field)):
-            for j in range(len(self.field[0])):
-                if self.field[i][j] == "-":
+        for i in range(len(checking_list)):
+            for j in range(len(checking_list[0])):
+                if checking_list[i][j] == 0:
                     return False
 
 
@@ -115,16 +116,16 @@ class PentagoBoard:
         o_counter = 0
 
         #Horizontal check for X and O
-        for i in range(len(self.field)):
-            for j in range(len(self.field[0])):
-                if self.field[i][j] == X:
+        for i in range(len(checking_list)):
+            for j in range(len(checking_list[0])):
+                if checking_list[i][j] == X:
                     x_counter += 1
-                if self.field[i][j] == O:
+                if checking_list[i][j] == O:
                     o_counter += 1
 
-                if self.field[i][j] != X:
+                if checking_list[i][j] != X:
                     x_counter = 0
-                if self.field[i][j] != O:
+                if checking_list[i][j] != O:
                     o_counter = 0
 
                 if x_counter == self.number_to_win:
@@ -133,115 +134,118 @@ class PentagoBoard:
                     return O
 
         #Vertical check for X and O
-        for i in range(len(self.field)):
-            for j in range(len(self.field[0])):
-                 if self.field[j][i] == X:
-                     x_counter += 1
-                 if self.field[j][i] == O:
-                     o_counter += 1
-
-                 if self.field[j][i] != X:
-                     x_counter = 0
-                 if self.field[j][i] != O:
-                     o_counter = 0
-
-                 if x_counter == self.number_to_win:
-                     return X
-                 if o_counter == self.number_to_win:
-                     return O
-
-        #Negaive diagonal for X and O
-        for i in range(len(self.field)):
-            if self.field[i][i] == X:
-                x_counter += 1
-            if self.field[i][i] == O:
-                o_counter += 1
-
-            if self.field[i][i] != X:
-                x_counter = 0
-            if self.field[i][i] != O:
-                o_counter = 0
-
-            if x_counter == self.number_to_win:
-                return X
-            if o_counter == self.number_to_win:
-                return O
-
-        for i in range(len(self.field)-1):
-            if self.field[i][i+1] == X:
-                x_counter += 1
-            if self.field[i][i+1] == O:
-                o_counter += 1
-
-            if self.field[i][i+1] != X:
-                x_counter = 0
-            if self.field[i][i+1] != O:
-                o_counter = 0
-
-            if x_counter == self.number_to_win:
-                return X
-            if o_counter == self.number_to_win:
-                return O
-
-        for i in range(1,len(self.field)+1):
-            if self.field[i][i-1] == X:
-                x_counter += 1
-            if self.field[i][i-1] == O:
-                o_counter += 1
-
-            if self.field[i][i-1] != X:
-                x_counter = 0
-            if self.field[i][i-1] != O:
-                o_counter = 0
-
-            if x_counter == self.number_to_win:
-                return X
-            if o_counter == self.number_to_win:
-                return O
-
-        #Positive diagonal for X and O
-        for i in range(len(self.field)-1,-1,-1):
-            for j in range(len(self.field)):
-                if self.field[i][j] == X:
+        for i in range(len(checking_list)):
+            for j in range(len(checking_list[0])):
+                if checking_list[j][i] == X:
                     x_counter += 1
-                if self.field[i][j] == O:
+                if checking_list[j][i] == O:
                     o_counter += 1
 
-                if self.field[i][j] != X:
+                if checking_list[j][i] != X:
                     x_counter = 0
-                if self.field[i][j] != O:
+                if checking_list[j][i] != O:
                     o_counter = 0
 
                 if x_counter == self.number_to_win:
                     return X
                 if o_counter == self.number_to_win:
                     return O
-        for i in range(len(self.field)-1,0,-1):
-            for j in range(1,len(self.field)):
-                    if self.field[i][j] == X:
+
+        #Positive diagonal for X and O
+        for i in range(len(checking_list)):
+            if checking_list[i][i] == X:
+                print("X found at",i,i)
+                x_counter += 1
+            if checking_list[i][i] == O:
+                o_counter += 1
+
+            if checking_list[i][i] != X:
+                x_counter = 0
+            if checking_list[i][i] != O:
+                o_counter = 0
+
+            if x_counter == self.number_to_win:
+                print("X pos")
+                return X
+            if o_counter == self.number_to_win:
+                return O
+
+        for i in range(len(checking_list)-1):
+            if checking_list[i][i+1] == X:
+                x_counter += 1
+            if checking_list[i][i+1] == O:
+                o_counter += 1
+
+            if checking_list[i][i+1] != X:
+                x_counter = 0
+            if checking_list[i][i+1] != O:
+                o_counter = 0
+
+            if x_counter == self.number_to_win:
+                return X
+            if o_counter == self.number_to_win:
+                return O
+
+        for i in range(1,len(checking_list)):
+            if checking_list[i][i-1] == X:
+                x_counter += 1
+            if checking_list[i][i-1] == O:
+                o_counter += 1
+
+            if checking_list[i][i-1] != X:
+                x_counter = 0
+            if checking_list[i][i-1] != O:
+                o_counter = 0
+
+            if x_counter == self.number_to_win:
+                return X
+            if o_counter == self.number_to_win:
+                return O
+
+        #Negative diagonal for X and O
+        for i in range(len(checking_list)-1,-1,-1):
+            for j in range(len(checking_list)):
+                if checking_list[i][j] == X:
+                    x_counter += 1
+                if checking_list[i][j] == O:
+                    o_counter += 1
+
+                if checking_list[i][j] != X:
+                    x_counter = 0
+                if checking_list[i][j] != O:
+                    o_counter = 0
+
+                if x_counter == self.number_to_win:
+                    print("X neg")
+                    return X
+                if o_counter == self.number_to_win:
+                    return O
+        for i in range(len(checking_list)-1,0,-1):
+            for j in range(1,len(checking_list)):
+                    if checking_list[i][j] == X:
                         x_counter += 1
-                    if self.field[i][j] == O:
+                    if checking_list[i][j] == O:
                         o_counter += 1
 
-                    if self.field[i][j] != X:
+                    if checking_list[i][j] != X:
                         x_counter = 0
-                    if self.field[i][j] != O:
+                    if checking_list[i][j] != O:
                         o_counter = 0
 
                     if x_counter == self.number_to_win:
                         return X
                     if o_counter == self.number_to_win:
                         return O
-        for i in range(len(self.field)-2,-1,-1):
-            for j in range(len(self.field)-1):
-                    if self.field[i][j] == X:
+        for i in range(len(checking_list)-2,-1,-1):
+            for j in range(len(checking_list)-1):
+                    if checking_list[i][j] == X:
                         x_counter += 1
-                    if self.field[i][j] == O:
+                    if checking_list[i][j] == O:
                         o_counter += 1
 
-                    if self.field[i][j] != X:
+                    if checking_list[i][j] != X:
                         x_counter = 0
-                    if self.field[i][j] != O:
+                    if checking_list[i][j] != O:
                         o_counter = 0
 
                     if x_counter == self.number_to_win:

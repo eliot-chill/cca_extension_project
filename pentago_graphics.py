@@ -1,4 +1,5 @@
 import pygame
+import math
 
 #Display contants
 FONTSIZE = 24
@@ -115,7 +116,7 @@ def hovered_col():
        and mouse_y >= OFFSET_CANVAS + TOP_OFFSET \
        and mouse_y <= OFFSET_CANVAS + TOP_OFFSET + BOARD_HEIGHT * CELL_SIZE):
         # The player clicked on a column, not outside
-        print("Col",int((mouse_x - OFFSET_CANVAS) / CELL_SIZE))
+        #print("Col",int((mouse_x - OFFSET_CANVAS) / CELL_SIZE))
         return int((mouse_x - OFFSET_CANVAS) / CELL_SIZE)
     else:
         # `-1` is the indicator that nothing has been selected
@@ -128,8 +129,8 @@ def hovered_row():
        and mouse_y >= OFFSET_CANVAS + TOP_OFFSET \
        and mouse_y <= OFFSET_CANVAS + TOP_OFFSET + BOARD_HEIGHT * CELL_SIZE):
         # The player clicked on a row, not outside
-        print("Row",int((mouse_y - TOP_OFFSET - 5) / CELL_SIZE))
-        return int((mouse_y - TOP_OFFSET - 5) / CELL_SIZE)
+        #print("Row",(int((mouse_y - TOP_OFFSET-20) / CELL_SIZE)))
+        return int(math.fabs(6-((mouse_y - TOP_OFFSET - 20) / CELL_SIZE)))
     else:
         # `-1` is the indicator that nothing has been selected
         return -1
