@@ -88,7 +88,7 @@ class PentagoBoard:
         if col >= 3:
             col -= 3
 
-        if self.field[region][row][col] != 0:
+        if self.field[region][row][col] == 0:
 
             self.field[region][row][col] = token
 
@@ -109,7 +109,7 @@ class PentagoBoard:
         return True
 
     def win_check(self):
-        checking_list = three_d_to_two_d()
+        checking_list = self.three_d_to_two_d()
 
         x_counter = 0
         o_counter = 0

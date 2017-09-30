@@ -132,13 +132,13 @@ class Pentago:
 
         # is the game finished?
         # return True if that is the case otherwise return False
-        def win_check(self):
-            if self.board.win_check() == 1:
-                self.winner = pentago_board.X
-                self.game_running = False
-            elif self.board.win_check() == 2:
-                self.winner = pentago_board.O
-                self.game_running = False
-            elif self.board.board_full():
-                self.winner = 0
-                self.game_running = False
+    def win_check(self):
+        if self.board.win_check() == 1:
+            self.winner = pentago_board.X
+            self.game_running = False
+        elif self.board.win_check() == 2:
+            self.winner = pentago_board.O
+            self.game_running = False
+        elif self.board.board_full():
+            self.winner = 0
+            self.game_running = False
