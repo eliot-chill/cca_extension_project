@@ -7,6 +7,7 @@ import pentago_board
 import pentago_graphics
 
 
+
 class Pentago:
 
 
@@ -21,10 +22,13 @@ class Pentago:
          self.board = pentago_board.EmptyPentagoBoard(number_to_win)
 
 
+
          self.selected_row = -1
          self.selected_col = -1
 
-         self.display = pentago_graphics.setup_display(self.board)
+         self.selected_index = (self.selected_row,self.selected_col)
+
+         self.display = pentago_graphics.setup_display()
 
 
          self.x_player = x_player
@@ -53,9 +57,8 @@ class Pentago:
     def draw(self):
         # A wrapper around the `ConnectFourGraphics.draw_board` function that
         # picks all the right components of `self`.
-        pentago_graphics.draw_board(self.display, self.board,
-                self.selected_col, self.selected_row,
-                self.game_running, self.player_turn(),
+        pentago_graphics.draw_board(self.display, self.board.three_d_to_two_d(),
+                self.selected_index, self.game_running, self.player_turn(),
                 self.x_turn, self.winner)
 
 
@@ -66,13 +69,13 @@ class Pentago:
             return pentago_board.O
 
 
-    def attempt_insert(self,row,col):
+    def attempt_insert(self, region,row,col):
         token = self.turn_token()
-        success = self.board.attempt_insert(row, col, token)
+        success = self.board.attempt_insert(region, row, col, token)
 
         if success:
-            if self.win_check():
-                self.set_winner()
+            self.win_check()
+
             self.x_turn = not(self.x_turn)
 
 
@@ -102,10 +105,15 @@ class Pentago:
                     sys.exit(0)
                 if event.type == MOUSEMOTION:
                     self.selected_index = \
-                        pentago_graphics.hovered_col(self.board)
+                        (pentago_graphics.hovered_col(),
+                         pentago_graphics.hovered_row())
                 if event.type == MOUSEBUTTONDOWN and event.button == 1:
                     if self.player_turn():
-                        self.attempt_insert(self.selected_row,self.selected_col)
+                        self.attempt_insert(
+                        self.board.find_region_from_2d_coord(self.selected_index[0],
+                        self.selected_index[1]),
+                        self.selected_index[0],
+                        self.selected_index[1])
 
             # Refresh the display and loop back
             self.draw()
@@ -125,4 +133,12 @@ class Pentago:
         # is the game finished?
         # return True if that is the case otherwise return False
         def win_check(self):
-            return False
+            if self.board.win_check() == 1:
+                self.winner = pentago_board.X
+                self.game_running = False
+            elif self.board.win_check() == 2:
+                self.winner = pentago_board.O
+                self.game_running = False
+            elif self.board.board_full():
+                self.winner = 0
+                self.game_running = False
