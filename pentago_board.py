@@ -1,5 +1,5 @@
 import copy
-import list_rotations
+import list_rotations as lr
 
 
 X = 1
@@ -129,8 +129,10 @@ class PentagoBoard:
                     o_counter = 0
 
                 if x_counter == self.number_to_win:
+                    print("X hor")
                     return X
                 if o_counter == self.number_to_win:
+                    print("O hor")
                     return O
 
         #Vertical check for X and O
@@ -147,14 +149,17 @@ class PentagoBoard:
                     o_counter = 0
 
                 if x_counter == self.number_to_win:
+                    print("X ver")
                     return X
                 if o_counter == self.number_to_win:
+                    print("O ver")
                     return O
 
+        x_counter = 0
+        o_counter = 0
         #Positive diagonal for X and O
         for i in range(len(checking_list)):
             if checking_list[i][i] == X:
-                print("X found at",i,i)
                 x_counter += 1
             if checking_list[i][i] == O:
                 o_counter += 1
@@ -165,11 +170,14 @@ class PentagoBoard:
                 o_counter = 0
 
             if x_counter == self.number_to_win:
-                print("X pos")
+                print("X pos 1")
                 return X
             if o_counter == self.number_to_win:
+                print("O pos 1")
                 return O
 
+        x_counter = 0
+        o_counter = 0
         for i in range(len(checking_list)-1):
             if checking_list[i][i+1] == X:
                 x_counter += 1
@@ -182,10 +190,14 @@ class PentagoBoard:
                 o_counter = 0
 
             if x_counter == self.number_to_win:
+                print("X pos 2")
                 return X
             if o_counter == self.number_to_win:
+                print("O pos 2")
                 return O
 
+        x_counter = 0
+        o_counter = 0
         for i in range(1,len(checking_list)):
             if checking_list[i][i-1] == X:
                 x_counter += 1
@@ -198,10 +210,14 @@ class PentagoBoard:
                 o_counter = 0
 
             if x_counter == self.number_to_win:
+                print("X pos 3")
                 return X
             if o_counter == self.number_to_win:
+                print("O pos 3")
                 return O
 
+        x_counter = 0
+        o_counter = 0
         #Negative diagonal for X and O
         for i in range(len(checking_list)-1,-1,-1):
             if checking_list[i][len(checking_list)-1-i] == X:
@@ -215,15 +231,21 @@ class PentagoBoard:
                 o_counter = 0
 
             if x_counter == self.number_to_win:
-                print("X neg")
+                print("X neg 1")
                 return X
             if o_counter == self.number_to_win:
+                print("O neg 1")
                 return O
 
+        x_counter = 0
+        o_counter = 0
         for i in range(len(checking_list)-2,-1,-1):
+                print("Checking:",i,(4-i))
                 if checking_list[i][len(checking_list)-2-i] == X:
+                    print("X found at: ",i,(4-i))
                     x_counter += 1
                 if checking_list[i][len(checking_list)-2-i] == O:
+                    print("O found at: ",i,(4-i))
                     o_counter += 1
 
                 if checking_list[i][len(checking_list)-2-i] != X:
@@ -232,10 +254,14 @@ class PentagoBoard:
                     o_counter = 0
 
                 if x_counter == self.number_to_win:
+                    print("X neg 2")
                     return X
                 if o_counter == self.number_to_win:
+                    print("O neg 2")
                     return O
 
+        x_counter = 0
+        o_counter = 0
         for i in range(len(checking_list)-1,0,-1):
                 if checking_list[i][len(checking_list)-i] == X:
                     x_counter += 1
@@ -248,8 +274,10 @@ class PentagoBoard:
                     o_counter = 0
 
                 if x_counter == self.number_to_win:
+                    print("X neg 3")
                     return X
                 if o_counter == self.number_to_win:
+                    print("O neg 3")
                     return O
 
 

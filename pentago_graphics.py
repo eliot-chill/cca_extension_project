@@ -55,8 +55,7 @@ def draw_board(game_display, board, selected_index, game_running, player_turn,
     (display,gamefont) = game_display
     display.fill(YELLOW)
 
-    pygame.draw.rect(display, BLACK,
-            (OFFSET_CANVAS,
+    pygame.draw.rect(display, BLACK, (OFFSET_CANVAS,
             OFFSET_CANVAS + TOP_OFFSET,
             BOARD_WIDTH * CELL_SIZE,
             BOARD_HEIGHT * CELL_SIZE
@@ -89,6 +88,7 @@ def draw_board(game_display, board, selected_index, game_running, player_turn,
     if game_running:
         if x_turn:
             thinking_surf = gamefont.render("X playing...", False, RED)
+
         else:
             thinking_surf = gamefont.render("O playing...", False, BLUE)
         display.blit(thinking_surf, (OFFSET_CANVAS + 3 * CELL_SIZE,
@@ -134,3 +134,50 @@ def hovered_row():
     else:
         # `-1` is the indicator that nothing has been selected
         return -1
+
+def text_objects(text, font):
+    textSurface = font.render(text, True, BLACK)
+    return textSurface, textSurface.get_rect()
+
+def button(display,msg,x,y,radius,ic,ac,action=None):
+    mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+    if x+radius > mouse[0] > x and y+radius > mouse[1] > y:
+        pygame.draw.circle(display, ac, (x,y), radius)
+
+        if click[0] and action != None:
+            action()
+    else:
+        pygame.draw.circle(display, ic, (x,y), radius)
+
+    smallText = pygame.font.SysFont("comicsansms",20)
+    textSurf, textRect = text_objects(msg, smallText)
+    textRect.center = ( (x+(radius/2)), (y+(radius/2)) )
+    display.blit(textSurf, textRect)
+
+
+def draw_region_buttons(display):
+
+    button(display, "1",int(OFFSET_CANVAS+CELL_SIZE*1.5),
+    int(OFFSET_CANVAS+TOP_OFFSET+CELL_SIZE*1.5),24,BLACK,WHITE,select_region(1))
+
+    button(display, "2",int(OFFSET_CANVAS+CELL_SIZE*4.5),
+    int(OFFSET_CANVAS+TOP_OFFSET+CELL_SIZE*1.5),24,BLACK,WHITE,select_region(2))
+
+    button(display, "2",int(OFFSET_CANVAS+CELL_SIZE*1.5),
+    int(OFFSET_CANVAS+TOP_OFFSET+CELL_SIZE*4.5),24,BLACK,WHITE,select_region(3))
+
+    button(display, "4",int(OFFSET_CANVAS+CELL_SIZE*4.5),
+    int(OFFSET_CANVAS+TOP_OFFSET+CELL_SIZE*4.5),24,BLACK,WHITE,select_region(4))
+
+
+def select_region(region_number):
+    print("Selected: ", region_number)
+
+def hovered_direction():
+    (mouse_x, mouse_y) = pygame.mouse.get_pos()
+
+    if (mouse_x < BOARD_WIDTH / 2):
+        return "left"
+    elif (mouse_x > BOARD_WIDTH / 2):
+        return "right"

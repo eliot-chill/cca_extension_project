@@ -25,6 +25,8 @@ class Pentago:
 
          self.selected_row = -1
          self.selected_col = -1
+         self.selected_region = -1
+         self.selected_direction = ""
 
          self.selected_index = (self.selected_row,self.selected_col)
 
@@ -115,9 +117,35 @@ class Pentago:
                         self.selected_index[0],
                         self.selected_index[1])
 
-            # Refresh the display and loop back
+            # Refresh the display
+            pentago_graphics.draw_region_buttons(self.display[0])
             self.draw()
             pygame.time.wait(40)
+
+            # for event in pygame.event.get():
+            #     if event.type == QUIT:
+            #         pygame.quit()
+            #         sys.exit(0)
+            #     if event.type == MOUSEBUTTONDOWN and event.button == 1:
+            #         if self.player_turn():
+            #             self.selected_region = pentago_graphics.hovered_region()
+            #     if event.type == MOUSEBUTTONDOWN and event.button == 1:
+            #         if self.player_turn():
+            #             self.selected_direction = \
+            #             pentago_graphics.hovered_direction()
+            #
+            # if self.selected_direction == "right":
+            #     self.board.rotate_region_clockwise(self.selected_region)
+            #
+            # elif self.selected_direction == "left":
+            #     self.board.rotate_region_anticlockwise(self.selected_region)
+            #
+            # self.selected_region = -1
+            # self.selected_direction = ""
+            #
+            # #Refresh the display and loop back
+            # self.draw()
+            # pygame.time.wait(40)
 
         # Once the game is finish, simply wait for the `QUIT` event
         while True:
