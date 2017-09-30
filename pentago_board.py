@@ -204,58 +204,53 @@ class PentagoBoard:
 
         #Negative diagonal for X and O
         for i in range(len(checking_list)-1,-1,-1):
-            for j in range(len(checking_list)):
-                if checking_list[i][j] == X:
+            if checking_list[i][len(checking_list)-1-i] == X:
+                x_counter += 1
+            if checking_list[i][len(checking_list)-1-i] == O:
+                o_counter += 1
+
+            if checking_list[i][len(checking_list)-1-i] != X:
+                x_counter = 0
+            if checking_list[i][len(checking_list)-1-i] != O:
+                o_counter = 0
+
+            if x_counter == self.number_to_win:
+                print("X neg")
+                return X
+            if o_counter == self.number_to_win:
+                return O
+
+        for i in range(len(checking_list)-2,-1,-1):
+                if checking_list[i][len(checking_list)-2-i] == X:
                     x_counter += 1
-                if checking_list[i][j] == O:
+                if checking_list[i][len(checking_list)-2-i] == O:
                     o_counter += 1
 
-                if checking_list[i][j] != X:
+                if checking_list[i][len(checking_list)-2-i] != X:
                     x_counter = 0
-                if checking_list[i][j] != O:
+                if checking_list[i][len(checking_list)-2-i] != O:
                     o_counter = 0
 
                 if x_counter == self.number_to_win:
-                    print("X neg")
                     return X
                 if o_counter == self.number_to_win:
                     return O
+
         for i in range(len(checking_list)-1,0,-1):
-            for j in range(1,len(checking_list)):
-                    if checking_list[i][j] == X:
-                        x_counter += 1
-                    if checking_list[i][j] == O:
-                        o_counter += 1
+                if checking_list[i][len(checking_list)-i] == X:
+                    x_counter += 1
+                if checking_list[i][len(checking_list)-i] == O:
+                    o_counter += 1
 
-                    if checking_list[i][j] != X:
-                        x_counter = 0
-                    if checking_list[i][j] != O:
-                        o_counter = 0
+                if checking_list[i][len(checking_list)-i] != X:
+                    x_counter = 0
+                if checking_list[i][len(checking_list)-i] != O:
+                    o_counter = 0
 
-                    if x_counter == self.number_to_win:
-                        return X
-                    if o_counter == self.number_to_win:
-                        return O
-        for i in range(len(checking_list)-2,-1,-1):
-            for j in range(len(checking_list)-1):
-                    if checking_list[i][j] == X:
-                        x_counter += 1
-                    if checking_list[i][j] == O:
-                        o_counter += 1
-
-                    if checking_list[i][j] != X:
-                        x_counter = 0
-                    if checking_list[i][j] != O:
-                        o_counter = 0
-
-                    if x_counter == self.number_to_win:
-                        return X
-                    if o_counter == self.number_to_win:
-                        return O
-
-
-
-
+                if x_counter == self.number_to_win:
+                    return X
+                if o_counter == self.number_to_win:
+                    return O
 
 
 class EmptyPentagoBoard(PentagoBoard):
