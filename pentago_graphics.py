@@ -141,11 +141,11 @@ def text_objects(text, font):
 
 def button(display,msg,x,y,radius,ic,ac,action=None):
     mouse = pygame.mouse.get_pos()
-    click = pygame.mouse.get_pressed()
+    
     if x+radius > mouse[0] > x and y+radius > mouse[1] > y:
         pygame.draw.circle(display, ac, (x,y), radius)
 
-        if click[0] and action != None:
+        if pygame.mouse.get_pressed() and action != None:
             action()
     else:
         pygame.draw.circle(display, ic, (x,y), radius)
