@@ -80,7 +80,14 @@ class PentagoBoard:
 
 
     def attempt_insert(self, region, row, col, token):
-        print(region,row,col)
+        # print(region,row,col)
+        # print(self.field)
+
+        if row >= 3:
+            row -= 3
+        if col >= 3:
+            col -= 3
+
         if self.field[region][row][col] != 0:
 
             self.field[region][row][col] = token
