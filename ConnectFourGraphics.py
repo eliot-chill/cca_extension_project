@@ -89,7 +89,7 @@ def draw_board(game_display,
 
     pygame.display.update()
 
-def draw_winners(display,a gamefont, winner):
+def draw_winners(display, gamefont, winner):
     if winner == 0:
         win_surf = gamefont.render("DRAW!", False, BLACK)
     elif winner == 1:

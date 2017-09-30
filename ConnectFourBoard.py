@@ -21,7 +21,6 @@ def valid_board(board):
 
 
 
-
 class Board():
 
     def __init__(self, board=None, rewards=None, winscore=100):
