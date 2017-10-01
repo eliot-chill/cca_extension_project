@@ -7,7 +7,6 @@ import ConnectFourGraphics
 import ConnectFourBoard
 
 
-
 class ConnectFour:
 
 

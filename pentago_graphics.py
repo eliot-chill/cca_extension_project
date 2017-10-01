@@ -1,5 +1,6 @@
-import pygame
+import pygame, sys
 import math
+from pygame.locals import *
 
 #Display contants
 FONTSIZE = 24
@@ -50,7 +51,7 @@ def draw_display_token(display, row, column):
 
 
 def draw_board(game_display, board, selected_index, game_running, player_turn,
-    x_turn, winner):
+    x_turn, winner, require_buttons):
 
     (display,gamefont) = game_display
     display.fill(YELLOW)
@@ -61,6 +62,7 @@ def draw_board(game_display, board, selected_index, game_running, player_turn,
             BOARD_HEIGHT * CELL_SIZE
             ),
             2)
+
 
 
     for j in range(BOARD_HEIGHT):
@@ -86,10 +88,13 @@ def draw_board(game_display, board, selected_index, game_running, player_turn,
 
 
     if game_running:
-        if x_turn:
+        if require_buttons:
+            thinking_surf = gamefont.render("Select a region...", False, BLACK)
+
+        if x_turn and not require_buttons:
             thinking_surf = gamefont.render("X playing...", False, RED)
 
-        else:
+        elif not x_turn and not require_buttons:
             thinking_surf = gamefont.render("O playing...", False, BLUE)
         display.blit(thinking_surf, (OFFSET_CANVAS + 3 * CELL_SIZE,
          2 * OFFSET_CANVAS + TOP_OFFSET + BOARD_HEIGHT * CELL_SIZE))
@@ -139,36 +144,36 @@ def text_objects(text, font):
     textSurface = font.render(text, True, BLACK)
     return textSurface, textSurface.get_rect()
 
-def button(display,msg,x,y,radius,ic,ac,action=None):
+def button(display,msg,x,y,w,h,ic,ac):
     mouse = pygame.mouse.get_pos()
-    
-    if x+radius > mouse[0] > x and y+radius > mouse[1] > y:
-        pygame.draw.circle(display, ac, (x,y), radius)
+    click = pygame.mouse.get_pressed()
+    print(click)
+    if x+w > int(mouse[0]) > x and y+h > int(mouse[1]) > y:
+        pygame.draw.rect(display, ac,(x,y,w,h))
 
-        if pygame.mouse.get_pressed() and action != None:
-            action()
+        if click[0] == 1:
+            sys.exit(0)
     else:
-        pygame.draw.circle(display, ic, (x,y), radius)
+        pygame.draw.rect(display, ic,(x,y,w,h))
 
     smallText = pygame.font.SysFont("comicsansms",20)
     textSurf, textRect = text_objects(msg, smallText)
-    textRect.center = ( (x+(radius/2)), (y+(radius/2)) )
+    textRect.center = ( (x+(w/2)), (y+(h/2)) )
     display.blit(textSurf, textRect)
-
 
 def draw_region_buttons(display):
 
-    button(display, "1",int(OFFSET_CANVAS+CELL_SIZE*1.5),
-    int(OFFSET_CANVAS+TOP_OFFSET+CELL_SIZE*1.5),24,BLACK,WHITE,select_region(1))
+    button(display, "1",(OFFSET_CANVAS),
+    (OFFSET_CANVAS+TOP_OFFSET+CELL_SIZE*6.5),72,48,WHITE,RED)
 
-    button(display, "2",int(OFFSET_CANVAS+CELL_SIZE*4.5),
-    int(OFFSET_CANVAS+TOP_OFFSET+CELL_SIZE*1.5),24,BLACK,WHITE,select_region(2))
+    button(display, "2",(OFFSET_CANVAS+CELL_SIZE*1.5),
+    (OFFSET_CANVAS+TOP_OFFSET+CELL_SIZE*6.5),72,48,WHITE,RED)
 
-    button(display, "2",int(OFFSET_CANVAS+CELL_SIZE*1.5),
-    int(OFFSET_CANVAS+TOP_OFFSET+CELL_SIZE*4.5),24,BLACK,WHITE,select_region(3))
+    button(display, "3",(OFFSET_CANVAS+CELL_SIZE*3),
+    (OFFSET_CANVAS+TOP_OFFSET+CELL_SIZE*6.5),72,48,WHITE,RED)
 
-    button(display, "4",int(OFFSET_CANVAS+CELL_SIZE*4.5),
-    int(OFFSET_CANVAS+TOP_OFFSET+CELL_SIZE*4.5),24,BLACK,WHITE,select_region(4))
+    button(display, "4",(OFFSET_CANVAS+CELL_SIZE*4.5),
+    (OFFSET_CANVAS+TOP_OFFSET+CELL_SIZE*6.5),72,48,WHITE,RED)
 
 
 def select_region(region_number):

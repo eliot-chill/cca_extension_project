@@ -41,6 +41,8 @@ class Pentago:
          self.game_running = True
          self.x_turn = True
 
+         self.require_buttons = False
+
          ## draw initial board
          self.draw()
 
@@ -57,11 +59,11 @@ class Pentago:
 
 
     def draw(self):
-        # A wrapper around the `ConnectFourGraphics.draw_board` function that
+        # A wrapper around the `draw_board` function that
         # picks all the right components of `self`.
         pentago_graphics.draw_board(self.display, self.board.three_d_to_two_d(),
                 self.selected_index, self.game_running, self.player_turn(),
-                self.x_turn, self.winner)
+                self.x_turn, self.winner, self.require_buttons)
 
 
     def turn_token(self):
@@ -116,11 +118,19 @@ class Pentago:
                         self.selected_index[1]),
                         self.selected_index[0],
                         self.selected_index[1])
+                        self.require_buttons = True
+
+
+
 
             # Refresh the display
-            pentago_graphics.draw_region_buttons(self.display[0])
+            #pentago_graphics.draw_region_buttons(self.display[0])
+
             self.draw()
             pygame.time.wait(40)
+
+            if self.require_buttons == True:
+                self.rotation_loop()
 
             # for event in pygame.event.get():
             #     if event.type == QUIT:
@@ -154,6 +164,13 @@ class Pentago:
                 pygame.quit()
                 sys.exit(0)
             pygame.time.wait(60)
+
+
+
+
+    def rotation_loop(self):
+
+        pentago_graphics.draw_region_buttons(self.display[0])
 
 
 
