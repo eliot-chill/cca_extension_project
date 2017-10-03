@@ -1,11 +1,12 @@
+#importing necessary modules, including the list_rotations module
 import copy
-import list_rotations as lr
+import list_rotations as lr #importing it as lr because "list_rotations" is long
 
-
+#setting up player tokens
 X = 1
 O = 2
 
-
+#defining an empty board, 4 regions of 3x3 grids. A 3D array (list.
 def empty_board():
     output_list = []
     for i in range(4):
@@ -19,7 +20,7 @@ def empty_board():
 
     return output_list
 
-
+#main pentago board class
 class PentagoBoard:
 
     def __init__(self, board = None, number_to_win = 5):
@@ -27,10 +28,12 @@ class PentagoBoard:
             board = empty_board()
 
         self.field = board
-
+        #the number "in a row" required to win
         self.number_to_win = number_to_win
 
-
+    #converts the 3d coordinate (eg, region, row and column) into a
+    #2d coordinate that is just a row and column. This is in reference to the
+    #whole board as apposed to the relative region.
     def three_d_to_two_d(self):
         output_list = []
 
@@ -47,6 +50,9 @@ class PentagoBoard:
 
         return output_list
 
+    #rotates region clockwise, the region in question is specified by the
+    #parameter
+    #a wrapper for the lr function
     def rotate_region_clockwise(self, region_number):
         temp_region = self.field[region_number]
         temp_region = lr.rotate_region_clockwise(temp_region)
@@ -65,6 +71,7 @@ class PentagoBoard:
             number_to_win = self.number_to_win
         )
 
+    #uses the row and column coordinate to determine the region
     def find_region_from_2d_coord(self, row, col):
         region = 0
         if (row <= 2 and col <= 2):
@@ -78,10 +85,8 @@ class PentagoBoard:
 
         return region
 
-
+    #attempts to insert the specified token into the region, row and column
     def attempt_insert(self, region, row, col, token):
-        # print(region,row,col)
-        # print(self.field)
 
         if row >= 3:
             row -= 3
@@ -97,7 +102,7 @@ class PentagoBoard:
         else:
             return False
 
-
+    #checks to see if the board is full
     def board_full(self):
         checking_list = self.three_d_to_two_d()
 
@@ -108,8 +113,11 @@ class PentagoBoard:
 
 
         return True
-
+    #This checks the various diections for potential "5-in-a-rows"
     def win_check(self):
+        """Apologies for the long function. I did intend on seperating this up
+        into smaller functions, however that never happened..."""
+
         checking_list = self.three_d_to_two_d()
 
         x_counter = 0
@@ -280,7 +288,7 @@ class PentagoBoard:
                     print("O neg 3")
                     return O
 
-
+#Defines an empty board - inherits from the main class
 class EmptyPentagoBoard(PentagoBoard):
     def __init__(self, number_to_win = 5):
         fresh_board = empty_board()

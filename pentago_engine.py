@@ -1,28 +1,30 @@
+#used to import all system and pygame libraries
 import pygame
 import sys
 from pygame.locals import *
 
-
+#import other libraries I've created to assist with project
 import pentago_board
 import pentago_graphics
 
 
-
+#main game class
 class Pentago:
 
-
+    #method called once instance of the class is initialised
     def __init__(self,
          height = 6, width = 6, number_to_win = 5,
          x_player = None, o_player = None, ai_delay = 60):
 
-
+         #intialise pygame and font setup
          pygame.init()
          pygame.font.init()
 
+         #creating an empty board from the pentago_board library
          self.board = pentago_board.EmptyPentagoBoard(number_to_win)
 
 
-
+         #initialising interface and other required settings
          self.selected_row = -1
          self.selected_col = -1
          self.selected_region = -1
@@ -59,20 +61,20 @@ class Pentago:
 
 
     def draw(self):
-        # A wrapper around the `draw_board` function that
-        # picks all the right components of `self`.
+        #This function acts as a wrapper for the function within
+        #pentago_graphics
         pentago_graphics.draw_board(self.display, self.board.three_d_to_two_d(),
                 self.selected_index, self.game_running, self.player_turn(),
                 self.x_turn, self.winner, self.require_buttons)
 
-
+    #defines the token required for the turn
     def turn_token(self):
         if self.x_turn:
             return pentago_board.X
         else:
             return pentago_board.O
 
-
+    #attemping to insert a token into the specified row, column and region
     def attempt_insert(self, region,row,col):
         token = self.turn_token()
         success = self.board.attempt_insert(region, row, col, token)
@@ -84,7 +86,7 @@ class Pentago:
 
 
 
-
+    #the main game loop
     def game_loop(self):
         while self.game_running:
 
@@ -102,7 +104,7 @@ class Pentago:
                 if ai_time_span < self.ai_delay:
                     pygame.time.delay(self.ai_delay - ai_time_span)
 
-
+            #Processing mouse events
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
@@ -118,46 +120,19 @@ class Pentago:
                         self.selected_index[1]),
                         self.selected_index[0],
                         self.selected_index[1])
-                        self.require_buttons = True
 
 
 
 
-            # Refresh the display
-            #pentago_graphics.draw_region_buttons(self.display[0])
+            #Draw buttons (attempting to)
+            pentago_graphics.draw_region_buttons(self.display[0])
 
+            #Update the display
             self.draw()
             pygame.time.wait(40)
 
-            if self.require_buttons == True:
-                self.rotation_loop()
 
-            # for event in pygame.event.get():
-            #     if event.type == QUIT:
-            #         pygame.quit()
-            #         sys.exit(0)
-            #     if event.type == MOUSEBUTTONDOWN and event.button == 1:
-            #         if self.player_turn():
-            #             self.selected_region = pentago_graphics.hovered_region()
-            #     if event.type == MOUSEBUTTONDOWN and event.button == 1:
-            #         if self.player_turn():
-            #             self.selected_direction = \
-            #             pentago_graphics.hovered_direction()
-            #
-            # if self.selected_direction == "right":
-            #     self.board.rotate_region_clockwise(self.selected_region)
-            #
-            # elif self.selected_direction == "left":
-            #     self.board.rotate_region_anticlockwise(self.selected_region)
-            #
-            # self.selected_region = -1
-            # self.selected_direction = ""
-            #
-            # #Refresh the display and loop back
-            # self.draw()
-            # pygame.time.wait(40)
-
-        # Once the game is finish, simply wait for the `QUIT` event
+        # If the game is over, wait for the quit event to close window
         while True:
             event = pygame.event.wait()
             if event.type == QUIT:
@@ -166,17 +141,8 @@ class Pentago:
             pygame.time.wait(60)
 
 
+    #check to see if either a winner has been decided or if the board is full
 
-
-    def rotation_loop(self):
-
-        pentago_graphics.draw_region_buttons(self.display[0])
-
-
-
-
-        # is the game finished?
-        # return True if that is the case otherwise return False
     def win_check(self):
         if self.board.win_check() == 1:
             self.winner = pentago_board.X

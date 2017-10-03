@@ -1,4 +1,3 @@
-# cca_extension_project
-CCA Coding++ Extension Project
+#cca_extension_project
 
-***Testing after shutdown***
+Run *pentago_two_player.py* to start.
